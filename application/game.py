@@ -1,4 +1,6 @@
 from dataclasses import dataclass
+from os import PathLike
+from typing import Union
 import random
 
 class Game:
@@ -15,16 +17,21 @@ class Board:
     square_pool = []
     
     @classmethod
-    def load_squares():
-        raise NotImplemented
+    def load_squares(cls, filename: Union[str, bytes, PathLike]):
+        with open(filename,'r') as file:
+            cls.square_pool = [
+                line.strip() for line in file
+            ]
 
     def __init__(self, size: int):
         squares = iter(random.choices(self.square_pool, k = size**2))
         self.squares = [
-            [next(squares) for _ in range(5)]
-            for _ in range(5)
+            [next(squares) for _ in range(size)]
+            for _ in range(size)
         ]
+        self.size = size
     
+
     def mark(self, row, column, color):
         self.squares[row][column].color = color
 

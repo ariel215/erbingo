@@ -2,10 +2,13 @@ from flask import Flask, make_response, redirect, render_template, request, url_
 from http import HTTPStatus
 from flask_socketio import SocketIO, send
 from random import randint
-from .game import Game
+from .game import Game, Board
+from pathlib import Path
+
 
 app = Flask(__name__)
 socketio = SocketIO(app)
+Board.load_squares(Path(__file__).parent / "data" / "goals.txt")
 
 # this isn't an actual secret because we're not storing 
 # any actual data, just tracking users
@@ -59,35 +62,32 @@ def join_game(game_id):
     if player_id in game.players:
         socketio.emit('join',{'error': {
             'already_joined': player_id
-        }}, namespace=f"/games/{game_id}")
+        }})
 
     game.players.add(player_id)
     if len(game.players) == 2:
-        socketio.emit('start', namespace=f"/games/{game_id}")
+        socketio.emit('start')
     else:
         socketio.emit('join', {'ok'})
 
 @socketio.on('mark_square')
-def mark_square(game_id,row,col):
+def mark_square(game_id:int, row:int, col:int):
     player_id = session['player_id']
     games[game_id].squares[row][col].player = player_id
-    socketio.emit("mark", {
+    socketio.emit("mark_square", {
         "row": row,
         "col": col,
-        "player": player_id
-    }, namespace=f"/games/{game_id}", include_self=False)
+    }, include_self=False)
 
 
 @socketio.on('unmark_square')
 def unmark_square(game_id, row, col):
-    player_id = session['player_id']
     games[game_id].squares[row][col].player = None
 
-    socketio.emit("mark",{
+    socketio.emit("unmark_square",{
         "row": row,
         "col": col,
-        "player": None
-    }, namespace=f"/games/{game_id}", include_self=False)
+    }, include_self=False)
 
 
 if __name__ == "__main__":

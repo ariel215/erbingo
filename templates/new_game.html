@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{%block body %}
+<h2> New Bingo Game </h2>
+<form name="new-game" id="new-game" > 
+<label> Name: 
+    <input name="name" type="text">
+</label>
+<label> Size:
+    <select name="size" required id="board-size">
+        <option value="3"> 3 x 3 </option>
+        <option value="4" selected> 4 x 4 </option>
+        <option value="5" disabled="true"> 5 x 5 (coming soon!) </option>
+    </select>
+</label>
+<button type="submit"> OK </button>
+</form>
+
+{%endblock}
