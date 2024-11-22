@@ -1,0 +1,11 @@
+[project]
+name = "bingus"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "flask-socketio>=5.4.1",
+    "flask>=3.1.0",
+    "gunicorn>=23.0.0",
+]
