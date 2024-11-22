@@ -1,0 +1,1 @@
+# Elden Ring Bingo Board
