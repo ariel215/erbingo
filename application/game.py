@@ -28,4 +28,7 @@ class Board:
     def mark(self, row, column, color):
         self.squares[row][column].color = color
 
-    
+@dataclass
+class Square: 
+    player: int | None
+    goal: str
