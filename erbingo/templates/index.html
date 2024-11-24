@@ -3,11 +3,12 @@
 <h1> Hello Bingo Players!</h1>
 <div id="game-table">
     <div id="game-table-title"> </div>
-    {% for game in games | dictsort %}
-    <div class="game" id="game-{{name}}" > 
+    {% for (id,game) in games | dictsort %}
+    <div class="game" id="game-{{game.name}}" > 
         <span class="game-name" > {{game.name}}</span>
         <a href="games/{{game.id}}" ><button type="button"> Join </button></a>
     </div>
+    {% endfor %}
 </div>
 
 <a href="{{url_for('new_game')}}" ><button type="button" id="new-game-button"> New Game </button></a>

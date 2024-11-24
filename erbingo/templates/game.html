@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<style >
+    #board {
+        display: grid;
+        grid-template-columns: repeat({{ game.board.squares | length }}, 1fr);
+        border: 1px solid black;
+    }
+    .square {
+        background-color: white;
+    }
+    
+    .square[data-player=self]{
+        background-color: rgb(235, 40, 40)
+    }
+    
+    .square[data-player=other]
+    {
+        background-color: rgb(40, 40, 235);
+    }
+    
+    
+
+    .square {
+        border: 1px solid black;
+    }
+</style>
+<script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
+<div id="board">
+    {% for row in game.board.squares %}
+    {% set row_index = loop.index %}
+    {% for square in row %}
+    {% set column = loop.index %}
+    <div class="square" data-player="" data-row="{{ row_index-1 }}" data-column="{{column - 1}}"> {{ square.goal }} </div>
+    {% endfor %}
+    {% endfor %}
+</div>
+
+<script>
+    const socket = io();
+    const OTHER  = "other";
+    const SELF = "self";
+    const game_id = (()=>{
+        let path = location.pathname.split('/');
+        return parseInt(path[path.length -1])
+    })();
+    let player_id = null;
+    socket.emit('join',{game_id: game_id}, (error,response)=> {
+        
+    })
+    const squares = [[]]
+
+    function toggle_mark(square){
+        if (square.dataset.player == OTHER){
+            return;
+        }
+
+        if (!square.dataset.player) {
+            square.dataset.player = SELF;
+            socket.emit("mark_square", {
+                row:parseInt(square.dataset.row), 
+                col:parseInt(square.dataset.column)})
+        }
+
+        else {
+            square.dataset.player = "",
+            socket.emit("unmark_square", {
+                row:parseInt(square.dataset.row), 
+                col:parseInt(square.dataset.column)
+            })
+        }
+    }
+
+    socket.on('mark_square', ({row,col})=> {
+        let r = parseInt(row);
+        let c = parseInt(col);
+        squares[r][c].dataset.player = OTHER          
+    });
+
+    socket.on('unmark_square', ({row,col})=> {
+        let r = parseInt(row);
+        let c = parseInt(col);
+        squares[r][c].dataset.player = ""
+    })
+
+    let squares_lst = $(".square");
+    for (square of squares_lst) {
+        square.addEventListener("click", (event)=>toggle_mark(event.target));
+        let square_row = squares[squares.length - 1];
+        square_row.push(square);
+        if (square_row.length == {{ game.board.squares | length }} ){
+            squares.push([])
+        }
+    }
+
+</script>
+
+{%endblock%}

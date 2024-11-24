@@ -26,7 +26,7 @@ class Board:
     def __init__(self, size: int):
         squares = iter(random.choices(self.square_pool, k = size**2))
         self.squares = [
-            [next(squares) for _ in range(size)]
+            [Square(None, next(squares)) for _ in range(size)]
             for _ in range(size)
         ]
         self.size = size
