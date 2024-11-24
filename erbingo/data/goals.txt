@@ -1,4 +1,4 @@
-Soldier of Godrick bare fists only
+Kill the Soldier of Godrick with bare fists only
 Complete 2 Catacombs
 Acquire 2 Dragon Hearts
 Kill Radhan
@@ -21,5 +21,9 @@ Kill an Ancestor Spirit
 Kill a boss with bows only 
 Finish a boss using the Ruptured Crystal Tear
 Reach Level 40
-Kill a boss fist weapons only 
+Kill a boss fists, daggers, or claws only 
 Kill a boss throwing items only
+Collect 8 Crystal Tears
+Collect 5 Talismans
+Learn 10 sorceries
+Learn 10 incantations

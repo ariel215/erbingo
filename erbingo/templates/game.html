@@ -2,41 +2,72 @@
 
 {% block body %}
 <style >
+    :root{
+        --color-self: rgb(235, 40, 40);
+        --color-preview: rgb(238, 200, 200);
+        --color-other: rgb(40, 40, 235);
+    }
+
+    #bingo-container {
+        display: grid;
+        grid-template-rows: 20% 60% 20%;
+        grid-template-columns: 20% 60% 20%;
+    }
+    .title{
+        grid-column: 2;
+        text-align: center;
+        align-items: center;
+        justify-self: center;
+    }
     #board {
+        grid-row: 2;
+        grid-column: 2;
         display: grid;
         grid-template-columns: repeat({{ game.board.squares | length }}, 1fr);
         border: 1px solid black;
+        width: fit-content;
+        justify-self: center;
     }
+
     .square {
         background-color: white;
+        border: 1px solid black;
+        height: 6rem;
+        width: 8rem;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
     
     .square[data-player=self]{
-        background-color: rgb(235, 40, 40)
+        background-color: var(--color-self)
     }
     
     .square[data-player=other]
     {
-        background-color: rgb(40, 40, 235);
+        background-color: var(--color-other)
     }
-    
-    
 
-    .square {
-        border: 1px solid black;
+    .square[data-player=""]:hover{
+        background-color: var(--color-preview);
     }
+
 </style>
 <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
-<div id="board">
-    {% for row in game.board.squares %}
-    {% set row_index = loop.index %}
-    {% for square in row %}
-    {% set column = loop.index %}
-    <div class="square" data-player="" data-row="{{ row_index-1 }}" data-column="{{column - 1}}"> {{ square.goal }} </div>
-    {% endfor %}
-    {% endfor %}
+<div id="bingo-container">
+    <div class="title"> <h1> Elden Ring Bingo </h1></div>
+    <div id="board">
+        {% for row in game.board.squares %}
+        {% set row_index = loop.index %}
+        {% for square in row %}
+        {% set column = loop.index %}
+        <div class="square" data-player="" data-row="{{ row_index-1 }}" data-column="{{column - 1}}"> {{ square.goal }} </div>
+        {% endfor %}
+        {% endfor %}
+    </div>
+    <div class="spacer"></div>
 </div>
-
 <script>
     const socket = io();
     const OTHER  = "other";

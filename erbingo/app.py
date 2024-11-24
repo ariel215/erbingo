@@ -27,8 +27,7 @@ def new_game():
     if  request.method == 'GET':
         return render_template('new_game.html')
     elif request.method == 'POST':
-        
-        game = Game(request.form['name'], int(request.form['size']))
+        game = Game(int(request.form['size']))
         games[game.id] = game
         return redirect(url_for("show_game", game_id=game.id))
     else:

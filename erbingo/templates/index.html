@@ -4,8 +4,8 @@
 <div id="game-table">
     <div id="game-table-title"> </div>
     {% for (id,game) in games | dictsort %}
-    <div class="game" id="game-{{game.name}}" > 
-        <span class="game-name" > {{game.name}}</span>
+    <div class="game" id="game-{{game.id}}" > 
+        <span class="game-name" > Game {{game.id }}</span>
         <a href="games/{{game.id}}" ><button type="button"> Join </button></a>
     </div>
     {% endfor %}
