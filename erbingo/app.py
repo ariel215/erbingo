@@ -46,11 +46,10 @@ def make_player_id():
     players.add(player_id)
     return player_id
 
-
 @socketio.on('mark_square')
 def mark_square(json):
     row = json['row']
-    col = json['col']    
+    col = json['col']
     socketio.emit("mark_square", data={
         "row": row,
         "col": col,
