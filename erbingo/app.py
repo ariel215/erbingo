@@ -1,6 +1,6 @@
-from flask import Flask, make_response, redirect, render_template, request, url_for
+from flask import Flask, redirect, render_template, request, url_for
 from http import HTTPStatus
-from flask_socketio import SocketIO, send
+from flask_socketio import SocketIO
 from random import randint
 from .game import Game, Board
 from pathlib import Path
@@ -14,37 +14,32 @@ Board.load_squares(_HERE / "data" / "goals.txt")
 # any actual data, just tracking users
 app.secret_key = b"bingus pingus" 
 players = set()
-games = {}
+app.game = None
 
 @app.route("/")
 def home():
-    # todo: keep players from racing to the same id
-    return render_template("index.html",games=games)
+    if not app.game: 
+        return redirect(url_for('new_game'))
+    else:
+        return redirect(url_for('play',game_id=app.game.id))
 
 
-@app.route("/games/new", methods=['POST', 'GET'])
+@app.route("/new_game", methods=['POST', 'GET'])
 def new_game():
     if  request.method == 'GET':
         return render_template('new_game.html')
     elif request.method == 'POST':
-        game = Game(int(request.form['size']))
-        games[game.id] = game
-        return redirect(url_for("show_game", game_id=game.id))
+        app.game = Game(int(request.form['size']))
+        return redirect(url_for("play"))
     else:
         return 'invalid method', HTTPStatus.METHOD_NOT_ALLOWED
     
-@app.route("/games/<int:game_id>", methods=['GET'])
-def show_game(game_id:int):
-    if game_id not in games:
-        return '', HTTPStatus.NOT_FOUND
-    return render_template('game.html',game=games[game_id])
+@app.route("/play", methods=['GET'])
+def play():
+    if not app.game:
+        return redirect(url_for('new_game'))
+    return render_template('game.html',game=app.game)
 
-def make_player_id():
-    player_id = randint(0, 10_000)
-    while player_id in players:
-        player_id = randint(0,10_000)
-    players.add(player_id)
-    return player_id
 
 @socketio.on('mark_square')
 def mark_square(json):

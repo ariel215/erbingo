@@ -7,10 +7,9 @@
         --color-preview: rgb(238, 200, 200);
         --color-other: rgb(40, 40, 235);
     }
-
     #bingo-container {
         display: grid;
-        grid-template-rows: 1fr auto 1fr;
+        grid-template-rows: minmax(50px, 250px) auto 1fr;
         grid-template-columns: 1fr auto 1fr;
         height: inherit
     }
@@ -21,6 +20,7 @@
         justify-self: center;
     }
     #board {
+        padding: 2px;
         grid-row: 2;
         grid-column: 2;
         display: grid;
@@ -77,10 +77,7 @@
         let path = location.pathname.split('/');
         return parseInt(path[path.length -1])
     })();
-    let player_id = null;
-    socket.emit('join',{game_id: game_id}, (error,response)=> {
-        
-    })
+
     const squares = [[]]
 
     function toggle_mark(square){
