@@ -30,7 +30,6 @@
         justify-self: center;
         background-color: var(--bs-dark);
     }
-
     .square {
         border: 1px solid black;
         height: 6rem;
@@ -40,7 +39,6 @@
         flex-direction: column;
         justify-content: center;
     }
-    
     .square[data-player=self]{
         background-color: var(--color-self)
     }
@@ -49,11 +47,13 @@
     {
         background-color: var(--color-other)
     }
-
     .square[data-player=""]:hover{
         background-color: var(--color-preview);
     }
-
+    #board-buttons{
+        display: flex;
+        flex-direction: column;
+    }
 </style>
 <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
 <div id="bingo-container">
@@ -67,8 +67,13 @@
         {% endfor %}
         {% endfor %}
     </div>
-    <div class="spacer"></div>
+    <div id="board-buttons">
+        <a href="{{url_for('new_game')}}"> <button id="new-game-button" type="button"> New Game</button></a>
+        <button type="button" id="save-button"> Save Board </button>
+        <a href="{{url_for('load')}}" ><button id="load-button" type="button"> Load Board </button></a>
+    </div>
 </div>
+
 <script>
     const socket = io();
     const OTHER  = "other";
@@ -78,7 +83,16 @@
         return parseInt(path[path.length -1])
     })();
 
-    const squares = [[]]
+    function saveBoard(){
+        console.log("saving board");
+        fetch("{{ url_for('save')}}", {
+            method: "PUT"
+        }).then(()=>{
+            alert("Saved board!");
+        })
+    }
+
+    $("#saveButton").on('click', saveBoard)
 
     function toggle_mark(square){
         if (square.dataset.player == OTHER){
@@ -113,6 +127,7 @@
         squares[r][c].dataset.player = ""
     })
 
+    const squares = [[]];
     let squares_lst = $(".square");
     for (square of squares_lst) {
         square.addEventListener("click", (event)=>toggle_mark(event.target));

@@ -21,7 +21,7 @@ def home():
     if not app.game: 
         return redirect(url_for('new_game'))
     else:
-        return redirect(url_for('play',game_id=app.game.id))
+        return redirect(url_for('play'))
 
 
 @app.route("/new_game", methods=['POST', 'GET'])
@@ -40,6 +40,20 @@ def play():
         return redirect(url_for('new_game'))
     return render_template('game.html',game=app.game)
 
+@app.route("/save", methods=['PUT'])
+def save():
+    with open(_HERE / 'data' / "game.json", 'w') as dest:
+        app.game.board.save(dest)
+    return {
+        'result': 'ok'
+    }
+
+@app.route("/load", methods=['GET'])
+def load():
+    with open(_HERE / 'data' / "game.json") as src:
+        app.game = Game(1)
+        app.game.board = Board.load(src)
+        return redirect(url_for("play"))
 
 @socketio.on('mark_square')
 def mark_square(json):

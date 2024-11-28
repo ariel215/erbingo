@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from os import PathLike
 from typing import Union
 import random
+import json
 
 class Game:
     current_id = 0
@@ -33,6 +34,26 @@ class Board:
 
     def mark(self, row, column, color):
         self.squares[row][column].color = color
+
+    def save(self,dest):
+        json.dump({'squares':
+                   [[{
+                       'player': s.player,
+                       'goal': s.goal
+                   } for s in row] for row in self.squares],
+                   'size': self.size
+                   },dest)
+
+    @classmethod
+    def load(cls, src):
+        js = json.load(src)
+        board = cls(1)
+        board.squares = [
+            [Square(**obj) for obj in row ]
+            for row in js['squares']
+        ]
+        board.size = js['size']
+        return board
 
 @dataclass
 class Square: 

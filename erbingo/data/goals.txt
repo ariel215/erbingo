@@ -1,20 +1,20 @@
 Kill the Soldier of Godrick with bare fists only
 Complete 2 Catacombs
-Acquire 2 Dragon Hearts
-Kill Radhan
+Kill Radahn
 Kill a Rememberance Boss with only incantations
 Kill a Rememberance Boss with only sorceries
+Kill a Rememberance Boss with only a Colossal Weapon
 Kill 2 NPC invaders
 Kill a boss with poison or rot
 Kill 4 Limgrave bosses
 Kill 4 Liurnia bosses 
-Kill 4 Caelid bosses 
+Kill 3 Caelid bosses 
 Kill 2 Altus bosses 
 Kill 3 bosses that ride horses
 Kill 3 bosses with "Tree" in the name
 Complete 3 evergaols in distinct areas
 Activate Godrick's Great Rune
-Activate Renalla's Great Rune
+Activate Rennala's Great Rune
 Kill the Leonine Misbegotten
 Complete a Hero's Grave
 Kill an Ancestor Spirit
@@ -24,6 +24,37 @@ Reach Level 40
 Kill a boss fists, daggers, or claws only 
 Kill a boss throwing items only
 Collect 8 Crystal Tears
-Collect 5 Talismans
+Collect 8 Talismans
 Learn 10 sorceries
 Learn 10 incantations
+Kill the Grafted Scion (Chapel of Anticipation)
+Collect 3 Ritual Pots
+Collect 10 Cracked Pots
+Acquire a Whetblade (not the Whetstone Knife)
+Kill a Cemetary Shade
+Kill a Fallingstar Beast
+Kill a Dragon
+Kill a Magma Wyrm
+Kill Godrick
+Kill Rennala
+Kill Rykard
+Kill Inquisitor Ghiza
+Take Rya's hand to Volcano Manor
+Kill 3 Erdtree Avatars
+Kill 2 Ulcerated Tree Spirits
+Kill 3 bosses that ride horses
+Kill a boss without dismounting Torrent
+Kill Moongrum, Carian Knight
+Kill a Crucible Knight
+Beat 2 Duo/Trio bosses
+Kill 3 bosses with "God" in their name
+Kill 2 Golems
+Kill an Omenkiller 
+Return Boc's needle
+Give Roderika the Chrystalid's Memento
+Kill Godrick while summoning Nepheli Loux
+Cure Millicent's rot
+Collect the full Dectus Medallion
+Kill 2 Tibia Mariners
+Duplicate a Rememberance
+Kill a Dragonkin Soldier
